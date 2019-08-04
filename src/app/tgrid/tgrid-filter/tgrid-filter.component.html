@@ -1,0 +1,7 @@
+<div class="tgrid-filter">
+  <div *ngFor="let item of dataSource">
+    <input type="checkbox" [checked]="item.checked" (change)="onChange($event, item.key)" /><label>{{ item.key }}</label>
+  </div>
+  <button (click)="onApply()">Применить</button>
+  <button (click)="onReset()">Сбросить</button>
+</div>

@@ -1,0 +1,46 @@
+<div class="tgrid">
+  <table border="1" width="1000px">
+    <thead>
+      <tr>
+        <th *ngFor="let item of columns" (click)="onClickSort(item)" [ngClass]="{ 'tgrid-column-sortable': item.allowSort }">
+          <span (click)="onClickFilter($event, item)">{{ item.name }} {{ item.sort }}</span>
+          <span [ngClass]="'tgrid-column-sort-' + item.sort"></span>
+        </th>
+      </tr>
+    </thead>
+    <tbody [style.height]="height">
+      <ng-container *ngFor="let item of _dataSource; let index = index; trackBy: trackByFn">
+        <ng-container *ngIf="pagerStart <= index && pagerEnd > index">
+          <tr
+            (click)="onClickRow(item, index)"
+            [ngClass]="{ 'tgrid-row-selected': item.selected }"
+          >
+            <td *ngFor="let cell of columns">{{ item.data[cell.key] }}</td>
+          </tr>
+          <tr *ngIf="item.expand">
+            <td colspan="4">Текст текст бла бла бла текст<br>еще текст и еще</td>
+          </tr>
+        </ng-container>
+      </ng-container>
+
+    </tbody>
+  </table>
+  <app-paginator *ngIf="_dataSource" [totalCount]="_dataSource.length" (changePage)="onChangePage($event)"></app-paginator>
+</div>
+
+<ng-template #templateHeaderCell let-item="item">
+  <th (click)="onClickSort(item)">
+    <span>{{ item.name }} {{ item.sort }}</span>
+    <span [ngClass]="'tgrid-column-sort-' + item.sort"></span>
+  </th>
+</ng-template>
+
+<ng-template #templateBodyRow let-row="row">
+  <tr>
+    <td *ngFor="let cell of row.columns">{{ row.item[cell.key] }}</td>
+  </tr>
+</ng-template>
+
+<ng-template #templateBodyCell let-item="item">
+  <td>{{ item.value }}</td>
+</ng-template>

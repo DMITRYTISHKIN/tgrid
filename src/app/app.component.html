@@ -1,0 +1,12 @@
+<app-tgrid idExpr="id" [dataSource]="data" height="500px">
+  <app-tgrid-column key="id" name="ID" [template]="templateId" [allowSort]="true">
+    <ng-template #templateId let-data="data">
+      <span>{{ data.id }}</span>
+    </ng-template>
+  </app-tgrid-column>
+  <app-tgrid-column key="name" name="Name" [allowFilter]="true"></app-tgrid-column>
+  <app-tgrid-column key="description" name="Note"></app-tgrid-column>
+  <app-tgrid-column key="date" name="Date"></app-tgrid-column>
+</app-tgrid>
+<button (click)="onClick()"></button>
+<ng-container #vc></ng-container>

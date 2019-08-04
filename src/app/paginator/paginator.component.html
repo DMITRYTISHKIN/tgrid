@@ -1,0 +1,60 @@
+<div class="paginator-container">
+  <button
+    (click)="onClick(currentPage - 1)"
+    [disabled]="currentPage === 1"
+    class="paginator-button"
+  >Prev</button>
+  <div *ngIf="countPages < maxButons + 2; then single else several"></div>
+  <ng-template #single>
+    <button
+      *ngFor="let page of pages"
+      (click)="onClick(page)"
+      [disabled]="currentPage === page"
+      class="paginator-button"
+    >{{ page }}</button>
+  </ng-template>
+  <ng-template #several>
+    <button
+      *ngFor="let page of leftPages"
+      (click)="onClick(page)"
+      [disabled]="currentPage === page"
+      class="paginator-button"
+    >{{ page }}</button>
+    <span
+      *ngIf="currentPage > middleValue"
+      class="paginator-dots"
+      [paginatorDots]="leftDots"
+      [onSelectPage]="onSelectPage"
+    >...</span>
+    <button
+      *ngFor="let page of middlePages"
+      (click)="onClick(page)"
+      [disabled]="currentPage === page"
+      class="paginator-button"
+    >{{ page }}</button>
+    <span
+      *ngIf="currentPage < countPages - middleValue + 1"
+      class="paginator-dots"
+      [paginatorDots]="rightDots"
+      [onSelectPage]="onSelectPage"
+    >...</span>
+    <button
+      *ngFor="let page of rightPages"
+      (click)="onClick(page)"
+      [disabled]="currentPage === page"
+      class="paginator-button"
+    >{{ page }}</button>
+  </ng-template>
+  <button
+    (click)="onClick(currentPage + 1)"
+    [disabled]="currentPage === countPages"
+    class="paginator-button"
+  >Next</button>
+  <select (change)="onChangePer($event.target.value)">
+    <option
+      *ngFor="let per of pers"
+      [selected]="per === perPage"
+      [value]="per"
+    >{{ per }}</option>
+  </select>
+</div>

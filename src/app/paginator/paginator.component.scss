@@ -1,0 +1,34 @@
+.paginator-button {
+  font-family: inherit;
+  padding: 5px 12px;
+  margin: 0px 3px;
+  font-size: 17px;
+  cursor: pointer;
+  min-width: 50px;
+  height: 40px;
+  border: 1px #ddd solid;
+  border-radius: 3px;
+  background: #fcfcfc;
+  color: #555;
+}
+
+.paginator-button:active,
+.paginator-button:focus {
+  outline: none;
+}
+
+.paginator-button:disabled {
+  background-color: #D9B7D2;
+  box-shadow: 0 1px 0 rgba(255,255,255,1), 0 0 2px rgba(0, 0, 0, 0.3) inset;
+  cursor: default;
+  color: white;
+  border: none;
+  padding: 6px 13px
+}
+
+.paginator-dots {
+  padding: 5px 9px;
+  margin: 0 3px;
+  color: #555;
+  cursor: pointer;
+}
