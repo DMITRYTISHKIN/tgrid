@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   }, {
     id: 3,
     name: 'Bye',
-    description: 'Hello world! You are very nice... aijfhidashf iaj filsaj jas; jdasjd duhas uhduiashdhasu dh hauhd uhduhas dhas dashdbiushdad',
+    description: 'Hello world! You are very nice... aijfhidashf iaj filsaj jas; jdasjd duhas',
     date: new Date('01/01/2019').toDateString()
   }, {
     id: 2,
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    for (let i = 0; i < 5000; i++) {
+    for (let i = 0; i < 500; i++) {
       this.data.push({
         id: this.data.length + 1,
         name: 'Hi!',

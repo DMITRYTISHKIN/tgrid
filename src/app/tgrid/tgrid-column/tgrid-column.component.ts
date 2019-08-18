@@ -7,7 +7,7 @@ import { TGridFilter } from '../models/tgrid-filter';
   templateUrl: './tgrid-column.component.html',
   styleUrls: ['./tgrid-column.component.scss']
 })
-export class TgridColumnComponent implements OnInit {
+export class TGridColumnComponent implements OnInit {
   @ViewChild('default', { static: true }) default: TemplateRef<any>;
 
   @Input() key: string;

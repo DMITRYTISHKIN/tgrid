@@ -1,15 +1,18 @@
 .paginator-button {
   font-family: inherit;
-  padding: 5px 12px;
+  // padding: 5px 12px;
   margin: 0px 3px;
-  font-size: 17px;
+  font-size: 12px;
   cursor: pointer;
-  min-width: 50px;
+  // min-width: 50px;
   height: 40px;
-  border: 1px #ddd solid;
+  border: none;
   border-radius: 3px;
-  background: #fcfcfc;
   color: #555;
+  border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
 }
 
 .paginator-button:active,
@@ -18,12 +21,9 @@
 }
 
 .paginator-button:disabled {
-  background-color: #D9B7D2;
-  box-shadow: 0 1px 0 rgba(255,255,255,1), 0 0 2px rgba(0, 0, 0, 0.3) inset;
+  background-color: #E8E8E8;
   cursor: default;
-  color: white;
   border: none;
-  padding: 6px 13px
 }
 
 .paginator-dots {

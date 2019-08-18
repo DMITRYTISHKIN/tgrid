@@ -1,5 +1,68 @@
 :host {
-  .tgrid-row-selected {
-    background-color: burlywood;
+  .tgrid > table {
+    border-collapse: collapse;
+    border: none;
+    font-size: 14px;
+    &.tgrid-with-detail {
+      & .tgrid-row {
+        cursor: pointer;
+        &:hover {
+          background-color: #f6f6f6;
+        }
+      }
+    }
+    & > thead {
+      & tr {
+        border-bottom: 1px #E8E8E8 solid;
+        background-color: #E8E8E8;
+        border-radius: 8px;
+      }
+      & th {
+        white-space: pre;
+        padding: 8px;
+        text-align: left;
+        font-weight: normal;
+        &.tgrid-column-sortable {
+          cursor: pointer;
+          &:hover {
+            color: #cb11ab;
+            & .tgrid-column-name {
+              border-color: #cb11ab;
+            }
+          }
+          & .tgrid-column-name {
+            border-bottom: 1px black dashed;
+          }
+        }
+      }
+    }
+    & > tbody {
+      & tr.tgrid-row {
+        border-bottom: 1px #E8E8E8 solid;
+        transition: background-color .15s;
+        &.tgrid-row-selected {
+          background-color: burlywood;
+        }
+        &.tgrid-row-expanded {
+          background-color: #cb11ab;
+          color: white;
+        }
+      }
+      & td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 8px;
+        border: none;
+        width: 1%;
+        white-space: nowrap;
+        &:last-child {
+          width: 0.000001%;;
+        }
+      }
+    }
+  }
+  .tgrid-paginator {
+    display: block;
+    margin-top: 12px;
   }
 }

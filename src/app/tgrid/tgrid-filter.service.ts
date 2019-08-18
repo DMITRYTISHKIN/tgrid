@@ -1,12 +1,12 @@
 import { Injectable, ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, Renderer2, QueryList } from '@angular/core';
 import { TGridItem } from './models/tgrid-item';
 import { TgridFilterComponent } from './tgrid-filter/tgrid-filter.component';
-import { TgridColumnComponent } from './tgrid-column/tgrid-column.component';
+import { TGridColumnComponent } from './tgrid-column/tgrid-column.component';
 import { TGridFilter } from './models/tgrid-filter';
 import { TgridOverlayComponent } from './tgrid-overlay/tgrid-overlay.component';
 
 @Injectable()
-export class TgridFilterService {
+export class TGridFilterService {
 
   public data: TGridItem[];
   private _originalData: TGridItem[];
@@ -18,7 +18,7 @@ export class TgridFilterService {
     private _renderer: Renderer2
   ) { }
 
-  public initializeData(data: TGridItem[], columns: QueryList<TgridColumnComponent>, original: TGridItem[]): TGridItem[] {
+  public initializeData(data: TGridItem[], columns: QueryList<TGridColumnComponent>, original: TGridItem[]): TGridItem[] {
     this.data = [...original];
     this._originalData = [...original];
 
@@ -29,7 +29,7 @@ export class TgridFilterService {
     return this.data;
   }
 
-  public createFilterPopover(column: TgridColumnComponent, element: HTMLElement): ComponentRef<TgridFilterComponent> {
+  public createFilterPopover(column: TGridColumnComponent, element: HTMLElement): ComponentRef<TgridFilterComponent> {
     const overlayRef = this._createOverlay();
     const filterRef = this._createFilter(overlayRef);
 
@@ -57,7 +57,7 @@ export class TgridFilterService {
     return filterRef;
   }
 
-  private _applyFilters(items: TGridItem[], columns: QueryList<TgridColumnComponent>): TGridItem[] {
+  private _applyFilters(items: TGridItem[], columns: QueryList<TGridColumnComponent>): TGridItem[] {
     const filters = columns.map(column => {
       return {
         column: column.key,
@@ -101,7 +101,7 @@ export class TgridFilterService {
     });
   }
 
-  public generateFilters(data: TGridItem[], column: TgridColumnComponent): TGridFilter[] {
+  public generateFilters(data: TGridItem[], column: TGridColumnComponent): TGridFilter[] {
     const filter = this._deserealizeFilter(column.filter);
     console.log(filter);
     return Object.keys(data.reduce((prev, item) => {

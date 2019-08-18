@@ -16,8 +16,9 @@ export class PaginatorComponent implements OnInit, OnChanges {
   @Input() perPage: number;
   @Input() currentPage: number;
   @Input() totalCount: number;
-  @Input() pers: number[] = [9, 18, 30];
+  @Input() pers: number[] = [20, 18, 30];
   @Input() aroundCount = 2;
+  @Input() showPersSelect = false;
 
   public countPages: number;
   public maxButons: number;
@@ -103,6 +104,7 @@ export class PaginatorComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if ('totalCount' in changes) {
+      debugger
       this._initVariables();
     }
   }

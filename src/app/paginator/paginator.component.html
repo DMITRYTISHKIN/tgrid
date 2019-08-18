@@ -50,7 +50,7 @@
     [disabled]="currentPage === countPages"
     class="paginator-button"
   >Next</button>
-  <select (change)="onChangePer($event.target.value)">
+  <select (change)="onChangePer($event.target.value)" *ngIf="showPersSelect">
     <option
       *ngFor="let per of pers"
       [selected]="per === perPage"

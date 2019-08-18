@@ -3,7 +3,7 @@ import { TGridItem } from './models/tgrid-item';
 import { TGridSortDirection } from './models/tgrid-sort-direction';
 
 @Injectable()
-export class TgridSortService {
+export class TGridSortService {
   public data: TGridItem[];
 
   constructor() { }
@@ -20,7 +20,6 @@ export class TgridSortService {
   }
 
   public applySort(items: TGridItem[], column: string, direction: TGridSortDirection, originItems: TGridItem[]): TGridItem[] {
-    debugger
     if (direction === TGridSortDirection.None) {
       return (items = [...originItems]);
     }
@@ -52,5 +51,20 @@ export class TgridSortService {
     }
 
     return items;
+  }
+
+  public getSortDirection(current: TGridSortDirection, key: string, column: string): TGridSortDirection {
+    if (key !== column) {
+      return TGridSortDirection.Asc;
+    }
+
+    switch (current) {
+      case TGridSortDirection.Asc:
+        return TGridSortDirection.Desc;
+      case TGridSortDirection.Desc:
+        return TGridSortDirection.None;
+      default:
+        return TGridSortDirection.Asc;
+    }
   }
 }

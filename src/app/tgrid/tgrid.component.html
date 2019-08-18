@@ -1,9 +1,12 @@
 <div class="tgrid">
-  <table border="1" width="1000px">
+  <table width="100%" class="" [class.tgrid-with-detail]="showDetail">
+    <colgroup>
+      <col *ngFor="let item of columns; let last = last" [width]="last ? 'auto' : '0'">
+    </colgroup>
     <thead>
       <tr>
-        <th *ngFor="let item of columns" (click)="onClickSort(item)" [ngClass]="{ 'tgrid-column-sortable': item.allowSort }">
-          <span (click)="onClickFilter($event, item)">{{ item.name }} {{ item.sort }}</span>
+        <th *ngFor="let item of columns" [ngClass]="{ 'tgrid-column-sortable': item.allowSort }" (click)="onClickColumn($event, item)">
+          <span class="tgrid-column-name">{{ item.name }}</span>
           <span [ngClass]="'tgrid-column-sort-' + item.sort"></span>
         </th>
       </tr>
@@ -13,19 +16,26 @@
         <ng-container *ngIf="pagerStart <= index && pagerEnd > index">
           <tr
             (click)="onClickRow(item, index)"
-            [ngClass]="{ 'tgrid-row-selected': item.selected }"
+            class="tgrid-row"
+            [class.tgrid-row-selected]="item.selected"
+            [class.tgrid-row-expanded]="item.expand"
           >
-            <td *ngFor="let cell of columns">{{ item.data[cell.key] }}</td>
+            <td *ngFor="let cell of columns">
+              <ng-container *ngTemplateOutlet="cell.template ? cell.template : null; context: item"></ng-container>
+              <ng-container *ngIf="!cell.template">{{ item.data[cell.key] }}</ng-container>
+            </td>
           </tr>
           <tr *ngIf="item.expand">
-            <td colspan="4">Текст текст бла бла бла текст<br>еще текст и еще</td>
+            <td colspan="4">
+              <ng-container [ngTemplateOutlet]="detailTemplate" [ngTemplateOutletContext]="item"></ng-container>
+            </td>
           </tr>
         </ng-container>
       </ng-container>
 
     </tbody>
   </table>
-  <app-paginator *ngIf="_dataSource" [totalCount]="_dataSource.length" (changePage)="onChangePage($event)"></app-paginator>
+  <app-paginator class="tgrid-paginator" *ngIf="_dataSource" [perPage]="20" [currentPage]="1" [totalCount]="_dataSource.length" (changePage)="onChangePage($event)"></app-paginator>
 </div>
 
 <ng-template #templateHeaderCell let-item="item">
