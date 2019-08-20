@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TgridDetailComponent } from './tgrid-detail.component';
+import { TGridDetailComponent } from './tgrid-detail.component';
 
-describe('TgridDetailComponent', () => {
-  let component: TgridDetailComponent;
-  let fixture: ComponentFixture<TgridDetailComponent>;
+describe('TGridDetailComponent', () => {
+  let component: TGridDetailComponent;
+  let fixture: ComponentFixture<TGridDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TgridDetailComponent ]
+      declarations: [ TGridDetailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TgridDetailComponent);
+    fixture = TestBed.createComponent(TGridDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

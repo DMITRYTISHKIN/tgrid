@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, AfterContentInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { TGridItem } from '../models/tgrid-item';
 
@@ -10,23 +10,30 @@ import { TGridItem } from '../models/tgrid-item';
     trigger('detail', [
       state('inactive', style({
         height: 0,
+        transform: 'translateY(-8px)',
+        opacity: 0,
         overflow: 'hidden',
       })),
       state('active', style({
-        height: '*'
+        height: '*',
+        opacity: 1
       })),
       transition('inactive => active', animate('150ms ease-in')),
       transition('active => inactive', animate('150ms ease-out'))
     ])
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TGridDetailComponent implements OnInit, AfterContentInit, OnDestroy {
   public detail = 'inactive';
+  public collapsed: boolean;
 
   @Input() detailTemplate: TemplateRef<any>;
   @Input() item: TGridItem;
 
-  constructor() { }
+  constructor(
+    private _changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() { }
 
@@ -38,12 +45,20 @@ export class TGridDetailComponent implements OnInit, AfterContentInit, OnDestroy
     this.item.detail = this;
     setTimeout(() => {
       this.detail = 'active';
+      this._changeDetectorRef.detectChanges();
     }, 0);
   }
 
-  public collapse(callback: () => void): void {
+  public collapse(): void {
+    this.collapsed = true;
     this.detail = 'inactive';
-    setTimeout(callback, 150);
+    this._changeDetectorRef.detectChanges();
+  }
+
+  public endAnimation() {
+    if (this.collapsed) {
+      this.item.expand = false;
+    }
   }
 
 }

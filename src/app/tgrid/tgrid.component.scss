@@ -66,6 +66,7 @@
           background-color: burlywood;
         }
         &.tgrid-row-expanded {
+          transition: background-color 150ms;
           background-color: #cb11ab;
           color: white;
         }

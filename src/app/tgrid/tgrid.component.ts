@@ -142,10 +142,8 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
   public openDetail(item: TGridItem, index: number): void {
     if (this.singleDetail) {
       if (this._openedItems.indexOf(item) > -1) {
-        item.detail.collapse(() => {
-          item.expand = false;
-          this._openedItems.pop();
-        });
+        this._openedItems.pop();
+        item.detail.collapse();
         return;
       }
 

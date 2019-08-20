@@ -12,7 +12,10 @@
     </ng-template>
   </app-tgrid-column>
   <ng-template #detailTemplate let-data="data">
-    <div [ngStyle]="{ padding: '8px' }">{{ data.description }}</div>
+    <div [ngStyle]="{ padding: '8px' }">{{ data.description }}
+      <br><br><br>
+      {{ data.date }}
+    </div>
   </ng-template>
 </app-tgrid>
 <button (click)="onClick()"></button>
