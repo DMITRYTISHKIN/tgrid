@@ -13,6 +13,8 @@ import {
   ViewContainerRef,
   TemplateRef
 } from '@angular/core';
+import { trigger, style, state, transition, query, animate, animation } from '@angular/animations';
+
 import { TGridColumnComponent } from './tgrid-column/tgrid-column.component';
 import { TGridSortDirection } from './models/tgrid-sort-direction';
 import { TGridItem } from './models/tgrid-item';
@@ -47,10 +49,10 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
   @Output() sortChange: EventEmitter<TGridSortDirection> = new EventEmitter();
   @Output() selectionChange: EventEmitter<TGridItem[]> = new EventEmitter();
 
-  public _dataSource: TGridItem[];
-  public pagerDataSource: TGridItem[];
-  public pagerStart: number;
-  public pagerEnd: number;
+  public data: TGridItem[];
+
+  public pagerData: TGridItem[];
+  public page = 0;
 
   private _originalDataSource: TGridItem[];
   private _selectedItems: TGridItem[] = [];
@@ -63,8 +65,7 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit() {
     if (this.perPage) {
-      this.pagerStart = 0;
-      this.pagerEnd = this.perPage - 1;
+      this.onChangePage(1);
     }
   }
 
@@ -81,8 +82,13 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   public onChangePage(page: number): void {
-    this.pagerStart = (page - 1) * (this.perPage - 1);
-    this.pagerEnd = this.pagerStart + (this.perPage - 1);
+    this.page = page;
+    const pagerStart = (page - 1) * (this.perPage - 1);
+    const pagerEnd = pagerStart + (this.perPage - 1);
+    this.pagerData = this.data.slice(pagerStart, pagerEnd);
+    if (!this.pagerData.length && this.page > 1) {
+      this.onChangePage(1);
+    }
   }
 
   public onClickColumn(e: MouseEvent, column: TGridColumnComponent): void {
@@ -136,8 +142,10 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
   public openDetail(item: TGridItem, index: number): void {
     if (this.singleDetail) {
       if (this._openedItems.indexOf(item) > -1) {
-        item.expand = false;
-        this._openedItems.pop();
+        item.detail.collapse(() => {
+          item.expand = false;
+          this._openedItems.pop();
+        });
         return;
       }
 
@@ -176,7 +184,7 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
       this._selectedItems.splice(0);
     }
 
-    this._dataSource = dataSource;
+    this._setDataSource(dataSource);
   }
 
   private _applySort(column: TGridColumnComponent): void {
@@ -185,13 +193,7 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
     this.sortColumn = column.key;
     column.sort = this.sortDirection;
 
-    this._dataSource = this._sortService.applySort(this._dataSource, this.sortColumn, this.sortDirection, this._filterService.data);
-    this._sortService.data = this._sortService.applySort(
-      this._sortService.data,
-      this.sortColumn,
-      this.sortDirection,
-      this._originalDataSource
-    );
+    this._setDataSource(this._sortService.applySort(this.data, this.sortColumn, this.sortDirection, this._filterService.data));
   }
 
   private _applyFilter(e: MouseEvent, column: TGridColumnComponent): void {
@@ -201,12 +203,19 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
     const componentRef = this._filterService.createFilterPopover(column, target);
 
     componentRef.instance.applyFilter.subscribe((filter: TGridFilter[]) => {
-      this._dataSource = this._filterService.applyFilter(this._sortService.data, column.key, filter);
+      this._setDataSource(this._filterService.applyFilter(this._sortService.data, column.key, filter));
     });
 
     componentRef.instance.resetFilter.subscribe(() => {
-      this._dataSource = [...this._sortService.data];
+      this._setDataSource([...this._sortService.data]);
     });
+  }
+
+  private _setDataSource(data: TGridItem[]): void {
+    this.data = data;
+    if (this.perPage) {
+      this.onChangePage(this.page);
+    }
   }
 
 }

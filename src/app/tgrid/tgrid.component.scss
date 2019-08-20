@@ -1,4 +1,11 @@
 :host {
+  display: block;
+  padding-top: 1px;
+  .tgrid {
+    height: 300px;
+    overflow-y: scroll;
+    margin-top: 32px;
+  }
   .tgrid > table {
     border-collapse: collapse;
     border: none;
@@ -19,9 +26,23 @@
       }
       & th {
         white-space: pre;
-        padding: 8px;
         text-align: left;
         font-weight: normal;
+        line-height: 0;
+        height: 0;
+        padding: 0;
+        & .tgrid-column-container {
+          background-color: #E8E8E8;
+          position: absolute;
+          display: flex;
+          height: 34px;
+          width: 100%;
+          top: 0;
+          align-items: center;
+          padding: 8px;
+          box-sizing: border-box;
+          line-height: normal;
+        }
         &.tgrid-column-sortable {
           cursor: pointer;
           &:hover {
@@ -37,9 +58,10 @@
       }
     }
     & > tbody {
+      overflow:auto;
+      height:200px;
       & tr.tgrid-row {
         border-bottom: 1px #E8E8E8 solid;
-        transition: background-color .15s;
         &.tgrid-row-selected {
           background-color: burlywood;
         }
@@ -47,6 +69,9 @@
           background-color: #cb11ab;
           color: white;
         }
+      }
+      & .tgrid-row-detail td {
+        padding: 0;
       }
       & td {
         overflow: hidden;

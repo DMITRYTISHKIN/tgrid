@@ -1,3 +1,5 @@
+import { TGridDetailComponent } from '../tgrid-detail/tgrid-detail.component';
+
 export class TGridItem {
   constructor(
     public id: any,
@@ -6,5 +8,6 @@ export class TGridItem {
     public expand?: boolean,
     public visible?: boolean,
     public selected?: boolean,
+    public detail?: TGridDetailComponent
   ) {}
 }
