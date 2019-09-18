@@ -13,7 +13,6 @@ import {
   ViewContainerRef,
   TemplateRef
 } from '@angular/core';
-import { trigger, style, state, transition, query, animate, animation } from '@angular/animations';
 
 import { TGridColumnComponent } from './tgrid-column/tgrid-column.component';
 import { TGridSortDirection } from './models/tgrid-sort-direction';
@@ -43,6 +42,7 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() selectMode: TGridSelectMode = TGridSelectMode.None;
   @Input() singleDetail = true;
   @Input() height: string;
+  @Input() paging: boolean = true;
   @Input() perPage = 20;
   @Input() detailTemplate: TemplateRef<any>;
 
@@ -56,7 +56,8 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
 
   private _originalDataSource: TGridItem[];
   private _selectedItems: TGridItem[] = [];
-  private _openedItems: TGridItem[] = [];
+  public openedItems: TGridItem[] = [];
+  public detailClosed = true;
 
   constructor(
     private _filterService: TGridFilterService,
@@ -64,7 +65,7 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    if (this.perPage) {
+    if (this.paging) {
       this.onChangePage(1);
     }
   }
@@ -141,27 +142,28 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
 
   public openDetail(item: TGridItem, index: number): void {
     if (this.singleDetail) {
-      if (this._openedItems.indexOf(item) > -1) {
-        this._openedItems.pop();
+      if (this.openedItems.indexOf(item) > -1) {
+        this.openedItems.pop();
         item.detail.collapse();
+        this.detailClosed = true;
         return;
       }
 
-      if (this._openedItems.length) {
-        const prev = this._openedItems.pop();
+      if (this.openedItems.length) {
+        const prev = this.openedItems.pop();
         prev.expand = false;
       }
 
       item.expand = true;
-      this._openedItems.push(item);
+      this.openedItems.push(item);
     } else {
-      const prevIndex = this._openedItems.indexOf(item);
+      const prevIndex = this.openedItems.indexOf(item);
       if (prevIndex > -1) {
         item.expand = false;
-        this._openedItems.splice(prevIndex, 1);
+        this.openedItems.splice(prevIndex, 1);
       } else {
         item.expand = true;
-        this._openedItems.push(item);
+        this.openedItems.push(item);
       }
     }
   }
@@ -211,7 +213,7 @@ export class TGridComponent implements OnInit, OnChanges, AfterViewInit {
 
   private _setDataSource(data: TGridItem[]): void {
     this.data = data;
-    if (this.perPage) {
+    if (this.paging) {
       this.onChangePage(this.page);
     }
   }

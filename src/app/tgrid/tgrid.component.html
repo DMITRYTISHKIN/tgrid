@@ -28,7 +28,7 @@
           </tr>
           <tr *ngIf="item.expand" class="tgrid-row-detail">
             <td colspan="4">
-              <app-tgrid-detail [detailTemplate]="detailTemplate" [item]="item"></app-tgrid-detail>
+              <app-tgrid-detail [detailTemplate]="detailTemplate" [item]="item" [parent]="this"></app-tgrid-detail>
             </td>
           </tr>
       </ng-container>
@@ -36,7 +36,7 @@
     </tbody>
   </table>
 </div>
-<app-paginator class="tgrid-paginator" *ngIf="data" [perPage]="20" [currentPage]="1" [totalCount]="data.length" (changePage)="onChangePage($event)"></app-paginator>
+<app-paginator class="tgrid-paginator" *ngIf="data && paging" [perPage]="20" [currentPage]="1" [totalCount]="data.length" (changePage)="onChangePage($event)"></app-paginator>
 
 <ng-template #templateHeaderCell let-item="item">
   <th (click)="onClickSort(item)">

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, TemplateRef, AfterContentInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { TGridItem } from '../models/tgrid-item';
+import { TGridComponent } from '../tgrid.component';
 
 @Component({
   selector: 'app-tgrid-detail',
@@ -30,21 +31,31 @@ export class TGridDetailComponent implements OnInit, AfterContentInit, OnDestroy
 
   @Input() detailTemplate: TemplateRef<any>;
   @Input() item: TGridItem;
+  @Input() parent: TGridComponent;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (!this.parent.detailClosed) {
+      this.parent.detailClosed = false;
+      this.detail = 'active';
+      this._changeDetectorRef.detectChanges();
+      return;
+    }
+  }
 
   ngOnDestroy() {
     this.item.detail = null;
+    this.parent = null;
   }
 
   ngAfterContentInit() {
     this.item.detail = this;
     setTimeout(() => {
       this.detail = 'active';
+      this.parent.detailClosed = false;
       this._changeDetectorRef.detectChanges();
     }, 0);
   }
