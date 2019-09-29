@@ -1,22 +1,5 @@
-<app-tgrid idExpr="id" [dataSource]="data" height="500px" [detailTemplate]="detailTemplate">
-  <app-tgrid-column key="id" name="ID" [template]="templateId" [allowSort]="true">
-    <ng-template #templateId let-data="data">
-      <span>{{ data.id }}</span>
-    </ng-template>
-  </app-tgrid-column>
-  <app-tgrid-column key="name" name="Name" [allowFilter]="true"></app-tgrid-column>
-  <app-tgrid-column key="description" name="Note"></app-tgrid-column>
-  <app-tgrid-column key="date" name="Date" [template]="templateDate">
-    <ng-template #templateDate let-data="data">
-      <span class="date-cell" style="white-space: nowrap">{{ data.date }}</span>
-    </ng-template>
-  </app-tgrid-column>
-  <ng-template #detailTemplate let-data="data">
-    <div [ngStyle]="{ padding: '8px' }">{{ data.description }}
-      <br><br><br>
-      {{ data.date }}
-    </div>
-  </ng-template>
-</app-tgrid>
-<button (click)="onClick()"></button>
-<ng-container #vc></ng-container>
+<div class="container" appScroll>
+  <div class="grid">
+    <div class="item" *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7]">{{ i }}</div>
+  </div>
+</div>

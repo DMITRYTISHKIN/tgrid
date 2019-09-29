@@ -3,10 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { TgridModule } from './tgrid/tgrid.module';
+import { ScrollDirective } from './directives/scroll.directive';
+import { ScrollViewComponent } from './scroll-view/scroll-view.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ScrollDirective,
+    ScrollViewComponent
   ],
   imports: [
     BrowserModule,

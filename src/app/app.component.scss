@@ -8,4 +8,60 @@
   .date-cell {
     white-space: nowrap;
   }
+
+  .container {
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+    border: 1px black solid;
+    & .grid {
+      display: grid;
+      grid-gap: 8px;
+    }
+    & .item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 28px;
+      height: 100px;
+      background-color: #FF9999;
+    }
+  }
+}
+
+.scroll-container {
+  position: relative;
+  &:hover .scroll-control-outer {
+    opacity: 1;
+  }
+  & .scroll-element {
+    transform: translateY(0px);
+  }
+}
+
+.scroll-control-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 2px;
+  height: 100%;
+  width: 7px;
+  box-sizing: border-box;
+  z-index: 9;
+  user-select: none;
+
+  & .scroll-control-outer {
+    position: fixed;
+    width: 3px;
+    height: 100%;
+    background-color: red;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+
+  & .scroll-control-inner {
+    background-color: green;
+    width: 100%;
+  }
 }
